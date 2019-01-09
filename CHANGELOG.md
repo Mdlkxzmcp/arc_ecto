@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.12.0 (2019-01-09)
+* (Enhancement) Allow passing binary data structs as attachments
+* (Enhancement) Add Arc.Ecto.t()
+* (Bugfix) Refactor to remove Dialyzer error for cast_attachments
+
 ## v0.11.1 (2018-11-18)
 * (Dependency Update) Require `ecto ~> 2.1 or ~> 3.0`
 

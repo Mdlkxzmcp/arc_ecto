@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.11.1 (2018-11-18)
+* (Dependency Update) Require `ecto ~> 2.1 or ~> 3.0`
+
+## v0.11.0 (2018-10-04)
+* (Dependency Update) Require `arc ~> 0.11.0`
+
 ## v0.10.0 (2018-06-19)
 * (Dependency Update) Require `arc ~> 0.10.0`
 

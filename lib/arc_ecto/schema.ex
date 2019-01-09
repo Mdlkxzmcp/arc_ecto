@@ -18,7 +18,7 @@ defmodule Arc.Ecto.Schema do
       end
 
       # Cast supports both atom and string keys, ensure we're matching on both.
-      allowed = Enum.map(allowed, fn key ->
+      allowed_param_keys = Enum.map(allowed, fn key ->
         case key do
           key when is_binary(key) -> key
           key when is_atom(key) -> Atom.to_string(key)
@@ -31,13 +31,18 @@ defmodule Arc.Ecto.Schema do
         %{} ->
           params
           |> Arc.Ecto.Schema.convert_params_to_binary
-          |> Map.take(allowed)
+          |> Map.take(allowed_param_keys)
           |> Enum.reduce([], fn
             # Don't wrap nil casts in the scope object
             {field, nil}, fields -> [{field, nil} | fields]
 
             # Allow casting Plug.Uploads
             {field, upload = %{__struct__: Plug.Upload}}, fields -> [{field, {upload, scope}} | fields]
+
+            # Allow casting binary data structs
+            {field, upload = %{filename: filename, binary: binary}}, fields
+              when is_binary(filename) and is_binary(binary) ->
+              [{field, {upload, scope}} | fields]
 
             # If casting a binary (path), ensure we've explicitly allowed paths
             {field, path}, fields when is_binary(path) ->

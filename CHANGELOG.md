@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.13.0 (2019-02-22)
+* (Enhancement) Replace Arc.Ecto.Schema with Arc.Ecto.Changeset
+* (Enhancement) Format project
+
 ## v0.12.0 (2019-01-09)
 * (Enhancement) Allow passing binary data structs as attachments
 * (Enhancement) Add Arc.Ecto.t()

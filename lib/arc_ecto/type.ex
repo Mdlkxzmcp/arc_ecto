@@ -5,18 +5,20 @@ defmodule Arc.Ecto.Type do
   def type, do: :string
 
   @filename_with_timestamp ~r{^(.*)\?(\d+)$}
-  
+
   def cast(definition, %{file_name: file, updated_at: updated_at}) do
     cast(definition, %{"file_name" => file, "updated_at" => updated_at})
   end
-  
+
   def cast(_definition, %{"file_name" => file, "updated_at" => updated_at}) do
     {:ok, %{file_name: file, updated_at: updated_at}}
   end
 
   def cast(definition, args) do
     case definition.store(args) do
-      {:ok, file} -> {:ok, %{file_name: file, updated_at: NaiveDateTime.utc_now}}
+      {:ok, file} ->
+        {:ok, %{file_name: file, updated_at: NaiveDateTime.utc_now()}}
+
       error ->
         Logger.error(inspect(error))
         :error
@@ -29,19 +31,22 @@ defmodule Arc.Ecto.Type do
         true ->
           [_, file_name, gsec] = Regex.run(@filename_with_timestamp, value)
           {file_name, gsec}
-        _ -> {value, nil}
+
+        _ ->
+          {value, nil}
       end
 
-    updated_at = case gsec do
-      gsec when is_binary(gsec) ->
-        gsec
-        |> String.to_integer
-        |> :calendar.gregorian_seconds_to_datetime
-        |> NaiveDateTime.from_erl!
+    updated_at =
+      case gsec do
+        gsec when is_binary(gsec) ->
+          gsec
+          |> String.to_integer()
+          |> :calendar.gregorian_seconds_to_datetime()
+          |> NaiveDateTime.from_erl!()
 
-      _ ->
-        nil
-    end
+        _ ->
+          nil
+      end
 
     {:ok, %{file_name: file_name, updated_at: updated_at}}
   end

@@ -3,8 +3,7 @@ defmodule ArcTest.Ecto.Type do
 
   test "dumps filenames with timestamp" do
     timestamp = NaiveDateTime.from_erl!({{1970, 1, 1}, {0, 0, 0}})
-    {:ok, value} =
-      DummyDefinition.Type.dump(%{file_name: "file.png", updated_at: timestamp})
+    {:ok, value} = DummyDefinition.Type.dump(%{file_name: "file.png", updated_at: timestamp})
     assert value == "file.png?62167219200"
   end
 

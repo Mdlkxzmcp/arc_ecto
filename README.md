@@ -51,14 +51,16 @@ end
 
 ### Add your attachment to your Ecto Schema
 
-Add a using statement `use Arc.Ecto.Schema` to the top of your ecto schema, and specify the type of the column in your schema as `MyApp.Avatar.Type`.
+Add an import statement `import Arc.Ecto.Changeset` to the top of your ecto schema, and specify the type of the column in your schema as `MyApp.Avatar.Type`.
 
 Attachments can subsequently be passed to Arc's storage though a Changeset `cast_attachments/3` function, following the syntax of `cast/3`
 
 ```elixir
 defmodule MyApp.User do
-  use MyApp.Web, :model
-  use Arc.Ecto.Schema
+  use Ecto.Schema
+
+  import Ecto.Changeset
+  import Arc.Ecto.Changeset
 
   schema "users" do
     field :name,   :string

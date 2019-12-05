@@ -24,12 +24,10 @@ defmodule Arc.Ecto.Definition do
         else
           case updated_at do
             %NaiveDateTime{} ->
-              stamp = :calendar.datetime_to_gregorian_seconds(NaiveDateTime.to_erl(updated_at))
+              version_url(updated_at, url)
 
-              case URI.parse(url).query do
-                nil -> url <> "?v=#{stamp}"
-                _ -> url <> "&v=#{stamp}"
-              end
+            string when is_bitstring(updated_at) ->
+              version_url(NaiveDateTime.from_iso8601!(string), url)
 
             _ ->
               url
@@ -43,6 +41,14 @@ defmodule Arc.Ecto.Definition do
         do: super({file_name, scope})
 
       def delete(args), do: super(args)
+
+      defp version_url(updated_at, url) do
+        stamp = :calendar.datetime_to_gregorian_seconds(NaiveDateTime.to_erl(updated_at))
+        case URI.parse(url).query do
+          nil -> url <> "?v=#{stamp}"
+          _ -> url <> "&v=#{stamp}"
+        end
+      end
     end
   end
 end

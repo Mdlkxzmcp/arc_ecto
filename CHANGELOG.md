@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.14.0 (2019-12-05)
+* (Dependency Relax) Require `ecto >= 2.1.0`
+* (Enhancement) Add `allow_urls` as an an alternative to `allow_paths` for fetching remote files
+* (Enhancement) Add a check for new `using` block in Ecto 3.2
+* (Enhancement) Adapt `arc_ecto` for embedded schemas
+
 ## v0.13.0 (2019-02-22)
 * (Enhancement) Replace Arc.Ecto.Schema with Arc.Ecto.Changeset
 * (Enhancement) Format project

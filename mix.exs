@@ -1,7 +1,7 @@
 defmodule Arc.Ecto.Mixfile do
   use Mix.Project
 
-  @version "0.12.0"
+  @version "0.14.0"
 
   def project do
     [
@@ -46,8 +46,8 @@ defmodule Arc.Ecto.Mixfile do
   defp deps do
     [
       {:arc, "~> 0.11.0"},
-      {:ecto, "~> 2.1 or ~> 3.0"},
-      {:mock, "~> 0.3.0", only: :test},
+      {:ecto, ">= 2.1.0"},
+      {:mock, "~> 0.3.3", only: :test},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
